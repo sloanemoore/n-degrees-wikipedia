@@ -54,7 +54,6 @@ def recursive_search_function(url, beg_url, search_path_list, sql_filename):
         return recursive_search_function(predecessor_url, beg_url, search_path_list, sql_filename)
    
 
-
 def six_degrees():
     degree_counter = 0   
     all_urls_list = list()
