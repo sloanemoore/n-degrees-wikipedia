@@ -75,7 +75,9 @@ def six_degrees():
                 break
             degree_counter += 1
             for url in find_urls:
-                if url in all_urls_list:
+                cur.execute('SELECT current_url FROM Links WHERE current_url = ? ', (url,))
+                row = cur.fetchone()
+                if row is None:
                     continue
                 links_on_url = find_urls_on_page(url)
                 if end_url in links_on_url:
