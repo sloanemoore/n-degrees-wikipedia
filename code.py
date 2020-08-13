@@ -1,6 +1,6 @@
 def get_prerequisites():
     beg_url = input("Please enter a beginning url: ")
-    end_url = input("Please enter an ending url: ")
+    end_url = input("Please enter an end url: ")
     num_degrees = int(input("Enter the number of degrees: "))    
     return (beg_url, end_url, num_degrees)
 
