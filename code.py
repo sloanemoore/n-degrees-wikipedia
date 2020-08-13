@@ -57,7 +57,6 @@ def n_degrees():
     degree_counter = 0   
     all_urls_list = list()
     beg_url, end_url, num_degrees = get_prerequisites()    
-    create_sql_database(beg_url)
     conn, cur, sql_filename = create_sql_database(beg_url)
     find_urls = [beg_url]
     found_url = False
