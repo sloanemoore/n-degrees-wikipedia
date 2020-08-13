@@ -74,9 +74,7 @@ def n_degrees():
                 break
             degree_counter += 1
             for url in find_urls:
-                cur.execute('SELECT current_url FROM Links WHERE current_url = ? ', (url,))
-                row = cur.fetchone()
-                if row is None:
+                if url in all_urls_list:
                     continue
                 links_on_url = find_urls_on_page(url)
                 if end_url in links_on_url:
@@ -89,8 +87,6 @@ def n_degrees():
                     if row is None:
                         cur.execute("INSERT INTO Links (current_url, predecessor_url) VALUES (?, ?)", (link,url))                    
                     all_urls_list.append(link)
-                    if link == end_url:
-                        break
             if end_url not in all_urls_list:
                 find_urls = []
                 for url in all_urls_list: 
@@ -104,7 +100,7 @@ def n_degrees():
         return f"FOUND END URL: {end_url}! NUMBER OF DEGREES: {degree_counter}. SEARCH PATH: {search_path_list[::-1]}"
     if found_url == False:       
         return f"SORRY, DID NOT FIND END URL {end_url} in {degree_counter} DEGREES."   
-    close_sql_database(conn, cur) 
+    close_sql_database(conn, cur)  
 
 
     
