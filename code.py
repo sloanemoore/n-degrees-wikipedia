@@ -1,4 +1,4 @@
-def get_prerequisites():
+def get_inputs():
     beg_url = input("Please enter a beginning url: ")
     end_url = input("Please enter an end url: ")
     num_degrees = int(input("Enter the number of degrees: "))    
@@ -56,7 +56,7 @@ def recursive_search_function(url, beg_url, search_path_list, sql_filename):
 def n_degrees():
     degree_counter = 0   
     all_urls_list = list()
-    beg_url, end_url, num_degrees = get_prerequisites()    
+    beg_url, end_url, num_degrees = get_inputs()    
     conn, cur, sql_filename = create_sql_database(beg_url)
     find_urls = [beg_url]
     found_url = False
@@ -93,15 +93,12 @@ def n_degrees():
                 for url in all_urls_list: 
                     if url not in find_urls:
                         find_urls.append(url)
-                all_urls_list = []    
+                all_urls_list = []
+    close_sql_database(conn, cur) 
     if found_url == True:
-        close_sql_database(conn, cur) 
         search_path_list.append(end_url)
         recursive_search_function(end_url, beg_url, search_path_list, sql_filename)
         return f"FOUND END URL: {end_url}! NUMBER OF DEGREES: {degree_counter}. SEARCH PATH: {search_path_list[::-1]}"
     if found_url == False:       
-        return f"SORRY, DID NOT FIND END URL {end_url} in {degree_counter} DEGREES."   
-    close_sql_database(conn, cur) 
-
-
-    
+        return f"SORRY, DID NOT FIND END URL {end_url} in {degree_counter} DEGREES." 
+   
