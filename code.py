@@ -89,9 +89,7 @@ def n_degrees():
                         cur.execute("INSERT INTO Links (current_url, predecessor_url) VALUES (?, ?)", (link,url))                    
                         all_urls_list.append(link)
                 conn.commit()
-            find_urls = []
-            for url in all_urls_list: 
-                find_urls.append(url)
+            find_urls = all_urls_list
             all_urls_list = []    
     if found_url == True:
         close_sql_database(conn, cur) 
