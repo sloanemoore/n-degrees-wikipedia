@@ -33,10 +33,10 @@ def find_urls_on_page(beg_url):
     fhand = urllib.request.urlopen(beg_url, context=ctx)
     soup = BeautifulSoup(fhand, 'html.parser')   
     for tag in soup.find_all("a"):
-                link = str(tag.get("href"))
-                if link.startswith("/wiki/") and link.count(":") == 0:
-                    rellink = "https://en.wikipedia.org"+link
-                    links_on_url.append(rellink)
+        link = str(tag.get("href"))
+        if link.startswith("/wiki/") and link.count(":") == 0:
+            rellink = "https://en.wikipedia.org"+link
+            links_on_url.append(rellink)
     return links_on_url
 
 
