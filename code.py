@@ -75,20 +75,19 @@ def n_degrees():
             for url in find_urls:
                 cur.execute('SELECT * FROM Links WHERE predecessor_url = ? ', (url,))
                 row = cur.fetchone()
-                if row is not None and beg_url not in row[0]:
-                    continue
-                links_on_url = find_urls_on_page(url)
-                if end_url in links_on_url:
-                    cur.execute("INSERT INTO Links (current_url, predecessor_url) VALUES (?, ?)", (end_url,url))                    
-                    found_url = True
-                    break
-                for link in links_on_url:
-                    cur.execute('SELECT current_url FROM Links WHERE current_url = ? ', (link,))
-                    row = cur.fetchone()
-                    if row is None:
-                        cur.execute("INSERT INTO Links (current_url, predecessor_url) VALUES (?, ?)", (link,url))                    
-                        all_urls_list.append(link)
-                conn.commit()
+                if row is None or beg_url in row:
+                    links_on_url = find_urls_on_page(url)
+                    if end_url in links_on_url:
+                        cur.execute("INSERT INTO Links (current_url, predecessor_url) VALUES (?, ?)", (end_url,url))                    
+                        found_url = True
+                        break
+                    for link in links_on_url:
+                        cur.execute('SELECT current_url FROM Links WHERE current_url = ? ', (link,))
+                        row = cur.fetchone()
+                        if row is None:
+                            cur.execute("INSERT INTO Links (current_url, predecessor_url) VALUES (?, ?)", (link,url))                    
+                            all_urls_list.append(link)
+                    conn.commit()
             find_urls = all_urls_list
             all_urls_list = []    
     if found_url == True:
